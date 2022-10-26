@@ -1,5 +1,4 @@
 ﻿using ArquiteturaCamadas.Business.Interfaces.Notification;
-using ArquiteturaCamadas.Business.Interfaces.Validation;
 using ArquiteturaCamadas.Domain.Entities.EntityBase;
 using FluentValidation;
 
@@ -8,10 +7,10 @@ namespace ArquiteturaCamadas.ApplicationService.Services.ServiceBase
     public abstract class BaseService<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly IValidate<TEntity> _validator;
+        private readonly IValidator<TEntity> _validator;
         protected readonly INotificationHandler _notification;
 
-        protected BaseService(IValidate<TEntity> validator, INotificationHandler notification)
+        protected BaseService(IValidator<TEntity> validator, INotificationHandler notification)
         {
             _validator = validator;
             _notification = notification;

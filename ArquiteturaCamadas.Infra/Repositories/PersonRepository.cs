@@ -5,7 +5,7 @@ using ArquiteturaCamadas.Infra.Repositories.RepositoryBase;
 
 namespace ArquiteturaCamadas.Infra.Repositories
 {
-    public class PersonRepository : BaseQueryCommandsRepository<Person>, IPersonRepository
+    public sealed class PersonRepository : BaseQueryCommandsRepository<Person>, IPersonRepository
     {
         public PersonRepository(ArquiteturaCamadasDbContext dbContext) : base(dbContext)
         {

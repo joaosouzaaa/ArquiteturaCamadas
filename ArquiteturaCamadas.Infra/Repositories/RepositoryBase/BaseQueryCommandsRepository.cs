@@ -1,8 +1,11 @@
 ﻿using ArquiteturaCamadas.Business.Interfaces.Repositories.RepositoryBase;
+using ArquiteturaCamadas.Business.Settings.PaginationSettings;
 using ArquiteturaCamadas.Domain.Entities.EntityBase;
 using ArquiteturaCamadas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Security.Principal;
 
 namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
@@ -16,7 +19,7 @@ namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
 
         public virtual async Task<TEntity> FindByIdAsync(int id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null, bool asNoTracking = false)
         {
-            var query = (IQueryable<TEntity>)_dbContext.Set<TEntity>();
+            var query = (IQueryable<TEntity>)_dbContextSet;
 
             if (asNoTracking)
                 query = _dbContextSet.AsNoTracking();
@@ -35,6 +38,19 @@ namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
                 query = includes(query);
 
             return await query.AsNoTracking().ToListAsync();
+        }
+
+        public virtual async Task<PageList<TEntity>> FindAllEntitiesWithPaginationAsync(PageParams pageParams, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include)
+        {
+            var query = (IQueryable<TEntity>)_dbContextSet;
+            
+            if (include != null)
+                query = include(query);
+
+            var count = await query.CountAsync();
+            var items = await query.Skip((pageParams.PageNumber - 1) * pageParams.PageSize).Take(pageParams.PageSize).ToListAsync();
+
+            return new PageList<TEntity>(items, count, pageParams);
         }
     }
 }

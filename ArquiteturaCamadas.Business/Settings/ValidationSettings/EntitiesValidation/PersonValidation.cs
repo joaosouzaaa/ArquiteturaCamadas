@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValidation
 {
-    public class PersonValidation : Validate<Person>
+    public sealed class PersonValidation : AbstractValidator<Person>
     {
         public PersonValidation()
         {

@@ -10,7 +10,7 @@ namespace ArquiteturaCamadas.Ioc
         public static void AddOthersConfiguration(this IServiceCollection services)
         {
             services.AddScoped<INotificationHandler, NotificationHandler>();
-
+            
             AutoMapperConfigurations.Inicialize();
         }
     }

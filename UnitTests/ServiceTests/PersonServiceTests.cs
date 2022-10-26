@@ -1,5 +1,4 @@
 ﻿using ArquiteturaCamadas.ApplicationService.AutoMapperSettings;
-using ArquiteturaCamadas.ApplicationService.Requests.Person;
 using ArquiteturaCamadas.ApplicationService.Services;
 using ArquiteturaCamadas.Business.Interfaces.Repositories;
 using ArquiteturaCamadas.Business.Settings.NotificationSettings;
@@ -10,7 +9,7 @@ using TestBuilders;
 
 namespace UnitTests.ServiceTests
 {
-    public class PersonServiceTests
+    public sealed class PersonServiceTests
     {
         Mock<IPersonRepository> _repository;
         PersonValidation _validate;

@@ -6,9 +6,9 @@ using ArquiteturaCamadas.ApplicationService.Services.ServiceBase;
 using ArquiteturaCamadas.Business.Extensions;
 using ArquiteturaCamadas.Business.Interfaces.Notification;
 using ArquiteturaCamadas.Business.Interfaces.Repositories;
-using ArquiteturaCamadas.Business.Interfaces.Validation;
 using ArquiteturaCamadas.Domain.Entities;
 using ArquiteturaCamadas.Domain.Enums;
+using FluentValidation;
 
 namespace ArquiteturaCamadas.ApplicationService.Services
 {
@@ -16,8 +16,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
     {
         private readonly IPersonRepository _personRepository;
 
-        public PersonService(IPersonRepository personRepository, IValidate<Person> validator, INotificationHandler notification) 
-                             : base(validator, notification)
+        public PersonService(IPersonRepository personRepository, IValidator<Person> validator, INotificationHandler notification) : base(validator, notification)
         {
             _personRepository = personRepository;
         }

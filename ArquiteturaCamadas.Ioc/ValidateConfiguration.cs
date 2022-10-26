@@ -1,6 +1,7 @@
 ﻿using ArquiteturaCamadas.Business.Interfaces.Validation;
 using ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValidation;
 using ArquiteturaCamadas.Domain.Entities;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ArquiteturaCamadas.Ioc
@@ -9,7 +10,7 @@ namespace ArquiteturaCamadas.Ioc
     {
         public static void AddValidateConfiguration(this IServiceCollection services)
         {
-            services.AddScoped<IValidate<Person>, PersonValidation>();
+            services.AddScoped<IValidator<Person>, PersonValidation>();
         }
     }
 }

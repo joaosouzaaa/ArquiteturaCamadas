@@ -13,6 +13,7 @@ namespace ArquiteturaCamadas.Ioc
 
             services.AddDbContext<ArquiteturaCamadasDbContext>(options =>
             {
+                //options.UseOracle(configuration.GetConnectionString("DefaultConnection"));
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 

@@ -13,8 +13,6 @@ namespace ArquiteturaCamadas.Business.Settings.NotificationSettings
 
         public List<DomainNotification> GetAllNotifications() => _notificationList;
 
-        public bool HasNotification() => _notificationList.Any();
-
         public bool AddDomainNotification(string key, string message)
         {
             var domainNotification = new DomainNotification

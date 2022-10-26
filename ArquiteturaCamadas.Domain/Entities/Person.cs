@@ -1,5 +1,6 @@
 ﻿using ArquiteturaCamadas.Domain.Entities.EntityBase;
 using ArquiteturaCamadas.Domain.Enums;
+using System.Net.Sockets;
 
 namespace ArquiteturaCamadas.Domain.Entities
 {
