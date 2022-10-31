@@ -1,5 +1,4 @@
-﻿using ArquiteturaCamadas.Business.Interfaces.Validation;
-using ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValidation;
+﻿using ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValidation;
 using ArquiteturaCamadas.Domain.Entities;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;

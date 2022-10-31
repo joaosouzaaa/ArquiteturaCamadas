@@ -1,23 +1,21 @@
-﻿using ArquiteturaCamadas.ApplicationService.Requests.Enums;
-using ArquiteturaCamadas.ApplicationService.Requests.Person;
-using ArquiteturaCamadas.ApplicationService.Responses;
+﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Enums;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Person;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person;
 using ArquiteturaCamadas.Domain.Enums;
 using Bogus;
+using TestBuilders.BaseBuilders;
 
 namespace TestBuilders
 {
-    public class PersonBuilder
+    public sealed class PersonBuilder : BuilderBase
     {
         private int _age = 20;
         private EGender _gender = new Faker().PickRandom<EGender>();
-        private int _id = new Faker().Random.Int(1, 100);
-        private string _name = "random name";
+        private int _id = GenerateRandomNumber();
+        private string _name = GenerateRandomWord();
         private EGenderRequest _genderRequest = new Faker().PickRandom<EGenderRequest>();
 
-        public static PersonBuilder NewObject()
-        {
-            return new PersonBuilder();
-        }
+        public static PersonBuilder NewObject() => new PersonBuilder();
 
         public ArquiteturaCamadas.Domain.Entities.Person DomainBuild() =>
             new ArquiteturaCamadas.Domain.Entities.Person
@@ -57,12 +55,20 @@ namespace TestBuilders
         public PersonBuilder WithName(string name)
         {
             _name = name;
+
             return this;
         }
 
         public PersonBuilder WithAge(int age)
         {
             _age = age;
+
+            return this;
+        }
+
+        public PersonBuilder WithId(int id)
+        {
+            _id = id;
 
             return this;
         }

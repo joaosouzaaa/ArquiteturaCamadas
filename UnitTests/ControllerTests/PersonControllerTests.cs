@@ -1,6 +1,6 @@
 ﻿using ArquiteturaCamadas.Api.Controllers;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person;
 using ArquiteturaCamadas.ApplicationService.Interfaces;
-using ArquiteturaCamadas.ApplicationService.Responses;
 using Moq;
 using TestBuilders;
 

@@ -4,9 +4,6 @@ using ArquiteturaCamadas.Domain.Entities.EntityBase;
 using ArquiteturaCamadas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Security.Principal;
 
 namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
 {
@@ -40,7 +37,7 @@ namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
             return await query.AsNoTracking().ToListAsync();
         }
 
-        public virtual async Task<PageList<TEntity>> FindAllEntitiesWithPaginationAsync(PageParams pageParams, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include)
+        public virtual async Task<PageList<TEntity>> FindAllEntitiesWithPaginationAsync(PageParams pageParams, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
             var query = (IQueryable<TEntity>)_dbContextSet;
             

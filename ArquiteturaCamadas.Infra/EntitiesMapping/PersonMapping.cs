@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ArquiteturaCamadas.Infra.EntitiesMapping
 {
-    public class PersonMapping : IEntityTypeConfiguration<Person>
+    public sealed class PersonMapping : IEntityTypeConfiguration<Person>
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {

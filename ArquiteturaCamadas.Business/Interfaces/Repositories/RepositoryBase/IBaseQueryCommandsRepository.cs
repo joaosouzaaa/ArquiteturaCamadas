@@ -1,4 +1,5 @@
-﻿using ArquiteturaCamadas.Domain.Entities.EntityBase;
+﻿using ArquiteturaCamadas.Business.Settings.PaginationSettings;
+using ArquiteturaCamadas.Domain.Entities.EntityBase;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace ArquiteturaCamadas.Business.Interfaces.Repositories.RepositoryBase
@@ -8,5 +9,6 @@ namespace ArquiteturaCamadas.Business.Interfaces.Repositories.RepositoryBase
     {
         Task<TEntity> FindByIdAsync(int id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null, bool asNoTracking = false);
         Task<List<TEntity>> FindAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null);
+        Task<PageList<TEntity>> FindAllEntitiesWithPaginationAsync(PageParams pageParams, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
     }
 }

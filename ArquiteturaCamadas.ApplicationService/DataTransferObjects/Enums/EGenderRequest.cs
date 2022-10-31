@@ -1,4 +1,4 @@
-﻿namespace ArquiteturaCamadas.ApplicationService.Requests.Enums
+﻿namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Enums
 {
     public enum EGenderRequest : ushort
     {

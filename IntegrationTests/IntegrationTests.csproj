@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArquiteturaCamadas.Api\ArquiteturaCamadas.Api.csproj" />
     <ProjectReference Include="..\ArquiteturaCamadas.Infra\ArquiteturaCamadas.Infra.csproj" />
+    <ProjectReference Include="..\TestBuilders\TestBuilders.csproj" />
   </ItemGroup>
 
 </Project>

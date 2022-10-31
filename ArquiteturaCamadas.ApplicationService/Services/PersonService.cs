@@ -1,11 +1,12 @@
 ﻿using ArquiteturaCamadas.ApplicationService.AutoMapperSettings;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Person;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person;
 using ArquiteturaCamadas.ApplicationService.Interfaces;
-using ArquiteturaCamadas.ApplicationService.Requests.Person;
-using ArquiteturaCamadas.ApplicationService.Responses;
 using ArquiteturaCamadas.ApplicationService.Services.ServiceBase;
 using ArquiteturaCamadas.Business.Extensions;
 using ArquiteturaCamadas.Business.Interfaces.Notification;
 using ArquiteturaCamadas.Business.Interfaces.Repositories;
+using ArquiteturaCamadas.Business.Settings.PaginationSettings;
 using ArquiteturaCamadas.Domain.Entities;
 using ArquiteturaCamadas.Domain.Enums;
 using FluentValidation;
@@ -16,7 +17,8 @@ namespace ArquiteturaCamadas.ApplicationService.Services
     {
         private readonly IPersonRepository _personRepository;
 
-        public PersonService(IPersonRepository personRepository, IValidator<Person> validator, INotificationHandler notification) : base(validator, notification)
+        public PersonService(IPersonRepository personRepository, IValidator<Person> validator, INotificationHandler notification) 
+                             : base(validator, notification)
         {
             _personRepository = personRepository;
         }
@@ -64,6 +66,13 @@ namespace ArquiteturaCamadas.ApplicationService.Services
             var personsList = await _personRepository.FindAllEntitiesAsync();
 
             return personsList.MapTo<List<Person>, List<PersonResponse>>();
+        }
+
+        public async Task<PageList<PersonResponse>> FindAllEntitiesWithPaginationAsync(PageParams pageParams)
+        {
+            var personPageList = await _personRepository.FindAllEntitiesWithPaginationAsync(pageParams);
+
+            return personPageList.MapTo<PageList<Person>, PageList<PersonResponse>>();
         }
     }
 }
