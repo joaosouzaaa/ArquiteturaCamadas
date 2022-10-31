@@ -13,7 +13,7 @@ using FluentValidation;
 
 namespace ArquiteturaCamadas.ApplicationService.Services
 {
-    public class PersonService : BaseService<Person>, IPersonService
+    public sealed class PersonService : BaseService<Person>, IPersonService
     {
         private readonly IPersonRepository _personRepository;
 

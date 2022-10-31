@@ -1,10 +1,10 @@
 ﻿using ArquiteturaCamadas.Api.Filters;
 
-namespace ArquiteturaCamadas.Api.Configurations
+namespace ArquiteturaCamadas.Api.DependencyInjection
 {
-    public static class FilterConfigurations
+    public static class FiltersDependencyInjection
     {
-        public static void AddFilterConfigurations(this IServiceCollection services)
+        public static void AddFiltersDependencyInjection(this IServiceCollection services)
         {
             services.AddMvc(options =>
             {

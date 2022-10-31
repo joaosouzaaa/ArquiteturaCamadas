@@ -1,4 +1,4 @@
-using ArquiteturaCamadas.Api.Configurations;
+using ArquiteturaCamadas.Api.DependencyInjection;
 using ArquiteturaCamadas.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +6,7 @@ var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.AddDependencyInjectionHandler(configuration);
-builder.Services.AddFilterConfigurations();
+builder.Services.AddFiltersDependencyInjection();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

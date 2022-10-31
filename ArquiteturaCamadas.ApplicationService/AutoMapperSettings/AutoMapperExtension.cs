@@ -6,6 +6,6 @@
             where TSource : class
             where TDestination : class
             =>
-            AutoMapperConfigurations.Mapper.Map<TSource, TDestination>(source);
+            AutoMapperSettings.Mapper.Map<TSource, TDestination>(source);
     }
 }

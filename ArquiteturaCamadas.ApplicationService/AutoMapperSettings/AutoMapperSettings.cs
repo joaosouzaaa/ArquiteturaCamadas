@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings
 {
-    public static class AutoMapperConfigurations
+    public static class AutoMapperSettings
     {
         public static IMapper Mapper { get; private set; }
         public static MapperConfiguration MapperConfiguration { get; private set; }

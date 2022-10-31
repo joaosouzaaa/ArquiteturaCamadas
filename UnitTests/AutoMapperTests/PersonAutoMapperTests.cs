@@ -12,7 +12,7 @@ namespace UnitTests.AutoMapperTests
     {
         public PersonAutoMapperTests()
         {
-            AutoMapperConfigurations.Inicialize();
+            AutoMapperSettings.Inicialize();
         }
 
         [Fact]

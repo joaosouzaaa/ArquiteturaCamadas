@@ -23,7 +23,7 @@ namespace UnitTests.ServiceTests
             _notification = new NotificationHandler();
             _service = new PersonService(_repository.Object, _validate, _notification);
 
-            AutoMapperConfigurations.Inicialize();
+            AutoMapperSettings.Inicialize();
         }
 
         [Fact]

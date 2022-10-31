@@ -11,7 +11,7 @@ namespace ArquiteturaCamadas.Ioc
         {
             services.AddScoped<INotificationHandler, NotificationHandler>();
             
-            AutoMapperConfigurations.Inicialize();
+            AutoMapperSettings.Inicialize();
         }
     }
 }
