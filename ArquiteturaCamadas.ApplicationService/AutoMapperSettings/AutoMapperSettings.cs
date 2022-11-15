@@ -13,6 +13,8 @@ namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings
             MapperConfiguration = new MapperConfiguration(config =>
             {
                 var profiles = Assembly.GetExecutingAssembly().GetExportedTypes().Where(p => p.IsClass && typeof(Profile).IsAssignableFrom(p));
+                var profile1 = Assembly.GetAssembly(typeof(Profile)).GetExportedTypes().Where(p => p.IsClass && typeof(Profile).IsAssignableFrom(p));
+        
 
                 foreach (var profile in profiles)
                     config.AddProfile((Profile)Activator.CreateInstance(profile));

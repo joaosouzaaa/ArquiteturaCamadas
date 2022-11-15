@@ -9,6 +9,8 @@ namespace ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValida
     {
         public PersonValidation()
         {
+            RuleFor(p => p.Address).SetValidator(new AddressValidation());
+
             RuleFor(p => p.Name).Length(3, 50)
                 .WithMessage(p => string.IsNullOrWhiteSpace(p.Name)
                ? EMessage.Required.Description().FormatTo("Name")

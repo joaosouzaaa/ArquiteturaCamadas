@@ -10,6 +10,9 @@ namespace ArquiteturaCamadas.Ioc
         public static void AddValidateConfiguration(this IServiceCollection services)
         {
             services.AddScoped<IValidator<Person>, PersonValidation>();
+            services.AddScoped<IValidator<Address>, AddressValidation>();
+            services.AddScoped<IValidator<Post>, PostValidation>();
+            services.AddScoped<IValidator<Tag>, TagValidation>();
         }
     }
 }

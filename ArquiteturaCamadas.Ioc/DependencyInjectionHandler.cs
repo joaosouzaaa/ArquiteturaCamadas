@@ -15,12 +15,15 @@ namespace ArquiteturaCamadas.Ioc
             {
                 //options.UseOracle(configuration.GetConnectionString("DefaultConnection"));
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
             });
 
             services.AddOthersConfiguration();
             services.AddValidateConfiguration();
             services.AddRepositoriesConfiguration();
             services.AddServicesConfigurations();
+            services.AddHttpClientDependencyInjection();
         }
     }
 }

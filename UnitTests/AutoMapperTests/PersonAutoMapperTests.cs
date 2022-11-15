@@ -4,7 +4,6 @@ using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person
 using ArquiteturaCamadas.Business.Settings.PaginationSettings;
 using ArquiteturaCamadas.Domain.Entities;
 using TestBuilders;
-using TestBuilders.Helpers;
 
 namespace UnitTests.AutoMapperTests
 {
@@ -59,7 +58,8 @@ namespace UnitTests.AutoMapperTests
                 PersonBuilder.NewObject().DomainBuild(),
                 PersonBuilder.NewObject().DomainBuild()
             };
-            var personPageList = BuildersUtils.BuildPageList(personList);
+            var pageParams = PageParamsBuilder.NewObject().DomainBuild();
+            var personPageList = new PageList<Person>(personList, personList.Count, pageParams);
             var personResponsePageList = personPageList.MapTo<PageList<Person>, PageList<PersonResponse>>();
 
             Assert.Equal(personResponsePageList.Result.Count, personPageList.Result.Count);

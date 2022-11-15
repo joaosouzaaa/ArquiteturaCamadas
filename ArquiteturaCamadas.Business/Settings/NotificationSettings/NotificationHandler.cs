@@ -1,4 +1,5 @@
 ﻿using ArquiteturaCamadas.Business.Interfaces.Notification;
+using ArquiteturaCamadas.Domain.Enums;
 
 namespace ArquiteturaCamadas.Business.Settings.NotificationSettings
 {

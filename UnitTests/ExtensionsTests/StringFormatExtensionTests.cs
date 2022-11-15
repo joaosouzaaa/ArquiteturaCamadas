@@ -11,5 +11,13 @@ namespace UnitTests.ExtensionsTests
 
             Assert.Equal("oi meu nome é joao", formatedString);
         }
+
+        [Fact]
+        public void CleanCaracters_CleanAllCaracters()
+        {
+            var valueToClean = "joaoasdsjdiasdi999".CleanCaracters();
+            
+            Assert.Equal(valueToClean, "999");
+        }
     }
 }

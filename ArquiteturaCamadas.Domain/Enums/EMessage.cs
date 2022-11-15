@@ -23,6 +23,9 @@ namespace ArquiteturaCamadas.Domain.Enums
         InvalidCredencials,
 
         [Description("Your transaction failed with status code {0}")]
-        FailedTransaction
+        FailedTransaction,
+
+        [Description("Format invalid for image")]
+        ÏnvalidImageFormat
     }
 }

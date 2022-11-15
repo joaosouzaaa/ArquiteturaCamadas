@@ -9,6 +9,8 @@ namespace ArquiteturaCamadas.Ioc
         public static void AddRepositoriesConfiguration(this IServiceCollection services)
         {
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
         }
     }
 }

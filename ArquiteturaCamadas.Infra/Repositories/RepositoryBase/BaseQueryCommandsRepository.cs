@@ -45,7 +45,7 @@ namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
                 query = include(query);
 
             var count = await query.CountAsync();
-            var items = await query.Skip((pageParams.PageNumber - 1) * pageParams.PageSize).Take(pageParams.PageSize).ToListAsync();
+            var items = await query.Skip((pageParams.PageNumber - 1) * pageParams.PageSize).Take(pageParams.PageSize).AsNoTracking().ToListAsync();
 
             return new PageList<TEntity>(items, count, pageParams);
         }

@@ -1,31 +1,32 @@
 ﻿using ArquiteturaCamadas.Api.Controllers;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person;
 using ArquiteturaCamadas.ApplicationService.Interfaces;
+using ArquiteturaCamadas.Business.Settings.PaginationSettings;
 using Moq;
 using TestBuilders;
 
 namespace UnitTests.ControllerTests
 {
-    public class PersonControllerTests
+    public sealed class PersonControllerTests
     {
-        Mock<IPersonService> _service;
-        PersonController _controller;
+        private readonly Mock<IPersonService> _personServiceMock;
+        private readonly PersonController _personController;
 
         public PersonControllerTests()
         {
-            _service = new Mock<IPersonService>();
-            _controller = new PersonController(_service.Object);
+            _personServiceMock = new Mock<IPersonService>();
+            _personController = new PersonController(_personServiceMock.Object);
         }
 
         [Fact]
         public async Task AddAsync_ReturnsTrue()
         {
             var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-            _service.Setup(s => s.AddAsync(personSaveRequest)).ReturnsAsync(true);
+            _personServiceMock.Setup(ps => ps.AddAsync(personSaveRequest)).ReturnsAsync(true);
 
-            var controllerResult = await _controller.AddAsync(personSaveRequest);
+            var controllerResult = await _personController.AddAsync(personSaveRequest);
 
-            _service.Verify(s => s.AddAsync(personSaveRequest), Times.Once());
+            _personServiceMock.Verify(ps => ps.AddAsync(personSaveRequest), Times.Once());
             Assert.True(controllerResult);
         }
 
@@ -33,11 +34,11 @@ namespace UnitTests.ControllerTests
         public async Task AddAsync_ReturnsFalse()
         {
             var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-            _service.Setup(s => s.AddAsync(personSaveRequest)).ReturnsAsync(false);
+            _personServiceMock.Setup(ps => ps.AddAsync(personSaveRequest)).ReturnsAsync(false);
 
-            var controllerResult = await _controller.AddAsync(personSaveRequest);
+            var controllerResult = await _personController.AddAsync(personSaveRequest);
 
-            _service.Verify(s => s.AddAsync(personSaveRequest), Times.Once());
+            _personServiceMock.Verify(ps => ps.AddAsync(personSaveRequest), Times.Once());
             Assert.False(controllerResult);
         }
 
@@ -45,11 +46,11 @@ namespace UnitTests.ControllerTests
         public async Task UpdateAsync_ReturnsTrue()
         {
             var personUpdateRequest = PersonBuilder.NewObject().UpdateRequestBuild();
-            _service.Setup(s => s.UpdateAsync(personUpdateRequest)).ReturnsAsync(true);
+            _personServiceMock.Setup(ps => ps.UpdateAsync(personUpdateRequest)).ReturnsAsync(true);
 
-            var controllerResult = await _controller.UpdateAsync(personUpdateRequest);
+            var controllerResult = await _personController.UpdateAsync(personUpdateRequest);
 
-            _service.Verify(s => s.UpdateAsync(personUpdateRequest), Times.Once());
+            _personServiceMock.Verify(ps => ps.UpdateAsync(personUpdateRequest), Times.Once());
             Assert.True(controllerResult);
         }
 
@@ -57,11 +58,11 @@ namespace UnitTests.ControllerTests
         public async Task UpdateAsync_ReturnsFalse()
         {
             var personUpdateRequest = PersonBuilder.NewObject().UpdateRequestBuild();
-            _service.Setup(s => s.UpdateAsync(personUpdateRequest)).ReturnsAsync(false);
+            _personServiceMock.Setup(ps => ps.UpdateAsync(personUpdateRequest)).ReturnsAsync(false);
 
-            var controllerResult = await _controller.UpdateAsync(personUpdateRequest);
+            var controllerResult = await _personController.UpdateAsync(personUpdateRequest);
 
-            _service.Verify(s => s.UpdateAsync(personUpdateRequest), Times.Once());
+            _personServiceMock.Verify(ps => ps.UpdateAsync(personUpdateRequest), Times.Once());
             Assert.False(controllerResult);
         }
 
@@ -69,11 +70,11 @@ namespace UnitTests.ControllerTests
         public async Task DeleteAsync_ReturnsTrue()
         {
             var id = 1;
-            _service.Setup(s => s.DeleteAsync(id)).ReturnsAsync(true);
+            _personServiceMock.Setup(ps => ps.DeleteAsync(id)).ReturnsAsync(true);
 
-            var controllerResult = await _controller.DeleteAsync(id);
+            var controllerResult = await _personController.DeleteAsync(id);
 
-            _service.Verify(s => s.DeleteAsync(id), Times.Once());
+            _personServiceMock.Verify(ps => ps.DeleteAsync(id), Times.Once());
             Assert.True(controllerResult);
         }
 
@@ -81,11 +82,11 @@ namespace UnitTests.ControllerTests
         public async Task DeleteAsync_ReturnsFalse()
         {
             var id = 1;
-            _service.Setup(s => s.DeleteAsync(id)).ReturnsAsync(false);
+            _personServiceMock.Setup(ps => ps.DeleteAsync(id)).ReturnsAsync(false);
 
-            var controllerResult = await _controller.DeleteAsync(id);
+            var controllerResult = await _personController.DeleteAsync(id);
 
-            _service.Verify(s => s.DeleteAsync(id), Times.Once());
+            _personServiceMock.Verify(ps => ps.DeleteAsync(id), Times.Once());
             Assert.False(controllerResult);
         }
 
@@ -94,51 +95,46 @@ namespace UnitTests.ControllerTests
         {
             var id = 1;
             var personResponse = PersonBuilder.NewObject().ResponseBuild();
-            _service.Setup(s => s.FindByIdAsync(id)).ReturnsAsync(personResponse);
+            _personServiceMock.Setup(ps => ps.FindByIdAsync(id)).ReturnsAsync(personResponse);
 
-            var controllerResult = await _controller.FindByIdAsync(id);
+            var controllerResult = await _personController.FindByIdAsync(id);
 
-            _service.Verify(s => s.FindByIdAsync(id), Times.Once());
+            _personServiceMock.Verify(ps => ps.FindByIdAsync(id), Times.Once());
             Assert.Equal(personResponse, controllerResult);
         }
 
         [Fact]
-        public async Task FindByIdAsync_ReturnsNull()
-        {
-            var id = 1;
-            _service.Setup(s => s.FindByIdAsync(id));
-
-            var controllerResult = await _controller.FindByIdAsync(id);
-
-            _service.Verify(s => s.FindByIdAsync(id), Times.Once());
-            Assert.Null(controllerResult);
-        }
-
-        [Fact]
-        public async Task FindAllAsync_ReturnsEntities()
+        public async Task FindAllEntitiesAsync_ReturnsEntities()
         {
             var personResponseList = new List<PersonResponse>()
             {
                 PersonBuilder.NewObject().ResponseBuild(),
                 PersonBuilder.NewObject().ResponseBuild()
             };
-            _service.Setup(s => s.FindAllEntitiesAsync()).ReturnsAsync(personResponseList);
+            _personServiceMock.Setup(ps => ps.FindAllEntitiesAsync()).ReturnsAsync(personResponseList);
 
-            var controllerResult = await _controller.FindAllEntitiesAsync();
+            var controllerResult = await _personController.FindAllEntitiesAsync();
 
-            _service.Verify(s => s.FindAllEntitiesAsync(), Times.Once());
+            _personServiceMock.Verify(ps => ps.FindAllEntitiesAsync(), Times.Once());
             Assert.Equal(controllerResult, personResponseList);
         }
 
         [Fact]
-        public async Task FindAllAsync_ReturnsEmptyList()
+        public async Task FindAllEntitiesWithPaginationAsync_ReturnsEntities()
         {
-            _service.Setup(s => s.FindAllEntitiesAsync());
+            var pageParams = PageParamsBuilder.NewObject().DomainBuild();
+            var personResponseList = new List<PersonResponse>()
+            {
+                PersonBuilder.NewObject().ResponseBuild(),
+                PersonBuilder.NewObject().ResponseBuild(),
+                PersonBuilder.NewObject().ResponseBuild()
+            };
+            var personResponsePageList = new PageList<PersonResponse>(personResponseList, personResponseList.Count, pageParams);
+            _personServiceMock.Setup(ps => ps.FindAllEntitiesWithPaginationAsync(pageParams)).ReturnsAsync(personResponsePageList);
 
-            var controllerResult = await _controller.FindAllEntitiesAsync();
+            var controllerResult = await _personController.FindAllEntitiesWithPaginationAsync(pageParams);
 
-            _service.Verify(s => s.FindAllEntitiesAsync(), Times.Once());
-            Assert.Null(controllerResult);
+            Assert.Equal(controllerResult, personResponsePageList);
         }
     }
 }

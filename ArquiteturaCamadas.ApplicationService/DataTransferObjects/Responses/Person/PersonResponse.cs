@@ -1,4 +1,6 @@
-﻿namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person
+﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Address;
+
+namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person
 {
     public sealed class PersonResponse
     {
@@ -6,5 +8,6 @@
         public string Name { get; set; }
         public int Age { get; set; }
         public ushort Gender { get; set; }
+        public AddressResponse Address { get; set; }
     }
 }

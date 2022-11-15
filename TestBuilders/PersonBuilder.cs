@@ -23,7 +23,8 @@ namespace TestBuilders
                 Age = _age,
                 Gender = _gender,
                 Id = _id,
-                Name = _name
+                Name = _name,
+                Address = AddressBuilder.NewObject().DomainBuild()
             };
 
         public PersonSaveRequest SaveRequestBuild() =>
@@ -31,7 +32,8 @@ namespace TestBuilders
             {
                 Age = _age,
                 Gender = _genderRequest,
-                Name = _name
+                Name = _name,
+                Address = AddressBuilder.NewObject().RequestBuild()
             };
 
         public PersonUpdateRequest UpdateRequestBuild() =>
@@ -40,7 +42,8 @@ namespace TestBuilders
                 Age = _age,
                 Gender = _genderRequest,
                 Id = _id,
-                Name = _name
+                Name = _name,
+                Address = AddressBuilder.NewObject().RequestBuild()
             };
 
         public PersonResponse ResponseBuild() =>
@@ -49,7 +52,8 @@ namespace TestBuilders
                 Age = _age,
                 Gender = (ushort)_gender,
                 Id = _id,
-                Name = _name
+                Name = _name,
+                Address = AddressBuilder.NewObject().ResponseBuild()
             };
 
         public PersonBuilder WithName(string name)

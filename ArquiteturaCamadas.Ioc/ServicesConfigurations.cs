@@ -9,6 +9,9 @@ namespace ArquiteturaCamadas.Ioc
         public static void AddServicesConfigurations(this IServiceCollection services)
         {
             services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<ICepService, CepService>();
         }
     }
 }

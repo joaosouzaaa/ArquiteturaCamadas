@@ -8,7 +8,7 @@ namespace ArquiteturaCamadas.Infra.EntitiesMapping
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.HasKey(p => p.Id);
+            builder.HasKey(x => x.Id);
 
             builder.Property(p => p.Name).HasColumnType("varchar(50)")
                 .HasColumnName("name").IsRequired(true);
@@ -18,6 +18,11 @@ namespace ArquiteturaCamadas.Infra.EntitiesMapping
 
             builder.Property(p => p.Gender)
                 .HasColumnName("gender").IsRequired(true);
+
+            builder.HasOne(p => p.Address)
+                .WithOne()
+                .HasForeignKey<Person>(p => p.AddressId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

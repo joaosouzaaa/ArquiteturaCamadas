@@ -10,11 +10,14 @@ namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings.Profiles
     {
         public PersonProfile()
         {
-            CreateMap<PersonSaveRequest, Person>();
+            CreateMap<PersonSaveRequest, Person>()
+                .ForMember(p => p.Address, map => map.Ignore());
 
-            CreateMap<PersonUpdateRequest, Person>();
+            CreateMap<PersonUpdateRequest, Person>()
+                .ForMember(p => p.Address, map => map.Ignore());
 
-            CreateMap<Person, PersonResponse>();
+            CreateMap<Person, PersonResponse>()
+                .ForMember(pr => pr.Address, map => map.MapFrom(p => p.Address));
 
             CreateMap<PageList<Person>, PageList<PersonResponse>>();
         }

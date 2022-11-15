@@ -17,7 +17,7 @@ namespace ArquiteturaCamadas.Infra.Repositories.RepositoryBase
             _dbContext = dbContext;
         }
 
-        private async Task<bool> SaveChangesAsync() =>
+        protected async Task<bool> SaveChangesAsync() =>
             await _dbContext.SaveChangesAsync() > 0;
 
         public virtual async Task<bool> AddAsync(TEntity entity)
