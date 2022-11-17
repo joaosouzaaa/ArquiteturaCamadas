@@ -1,4 +1,6 @@
-﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Tag;
+﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Tag;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Post;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Tag;
 using ArquiteturaCamadas.Domain.Entities;
 using TestBuilders.BaseBuilders;
 
@@ -24,6 +26,27 @@ namespace TestBuilders
             new TagResponse()
             {
                 Id = _id,
+                TagName = _tagName
+            };
+
+        public TagSaveRequest SaveRequestBuild() =>
+            new TagSaveRequest()
+            {
+                TagName = _tagName
+            };
+
+        public TagUpdateRequest UpdateRequestBuild() =>
+            new TagUpdateRequest()
+            {
+                Id = _id,
+                TagName = _tagName
+            };
+
+        public TagPostsResponse PostsResponseBuild() =>
+            new TagPostsResponse()
+            {
+                Id = _id,
+                Posts = new List<PostResponse>(),
                 TagName = _tagName
             };
 

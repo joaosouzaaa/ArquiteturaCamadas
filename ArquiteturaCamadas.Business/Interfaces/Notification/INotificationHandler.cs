@@ -6,5 +6,6 @@ namespace ArquiteturaCamadas.Business.Interfaces.Notification
     {
         List<DomainNotification> GetAllNotifications();
         bool AddDomainNotification(string key, string message);
+        bool HasNotifications();
     }
 }

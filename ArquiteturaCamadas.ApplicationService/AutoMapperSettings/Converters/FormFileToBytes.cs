@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings.Converters
 {

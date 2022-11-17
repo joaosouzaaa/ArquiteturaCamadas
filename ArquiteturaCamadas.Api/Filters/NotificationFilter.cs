@@ -15,10 +15,8 @@ namespace ArquiteturaCamadas.Api.Filters
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var notificationList = _notification.GetAllNotifications();
-
-            if (notificationList.Any())
-                context.Result = new BadRequestObjectResult(notificationList);
+            if (_notification.HasNotifications())
+                context.Result = new BadRequestObjectResult(_notification.GetAllNotifications());
 
             base.OnActionExecuted(context);
         }
