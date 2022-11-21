@@ -12,6 +12,7 @@ namespace TestBuilders
         private string _message = GenerateRandomWord();
         private int _id = GenerateRandomNumber();
         private byte[] _imageBytes = { 0x32, 0x00, 0x1E, 0x00 };
+        private List<Tag> _tagList = new List<Tag>();
 
         public static PostBuilder NewObject() => new PostBuilder();
 
@@ -21,7 +22,7 @@ namespace TestBuilders
                 Id = _id,
                 ImageBytes = _imageBytes,
                 Message = _message,
-                Tags = new List<Tag>()
+                Tags = _tagList
             };
 
         public PostSaveRequest SaveRequestBuild() =>
@@ -62,6 +63,13 @@ namespace TestBuilders
             _message = message; 
 
             return this;    
+        }
+
+        public PostBuilder WithTagList(List<Tag> tagList)
+        {
+            _tagList = tagList;
+
+            return this;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ArquiteturaCamadas.Api.Filters
             if (ExternalMethodFilter.IsMethodGet(context))
                 return;
 
-            if (context.Exception == null && context.ModelState.IsValid && _notificationHandler.HasNotifications())
+            if (context.Exception == null && context.ModelState.IsValid && !_notificationHandler.HasNotifications())
                 _unitOfWork.CommitTransaction();
             else
                 _unitOfWork.RollbackTransaction();
@@ -28,14 +28,14 @@ namespace ArquiteturaCamadas.Api.Filters
             base.OnActionExecuted(context);
         }
 
-        public override void OnResultExecuting(ResultExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (ExternalMethodFilter.IsMethodGet(context))
                 return;
 
             _unitOfWork.BeginTransaction();
 
-            base.OnResultExecuting(context);
+            base.OnActionExecuting(context);
         }
     }
 }

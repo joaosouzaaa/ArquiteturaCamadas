@@ -20,8 +20,6 @@ namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings.Profiles
             CreateMap<Post, PostTagsResponse>()
                 .ForMember(pr => pr.Tags, map => map.MapFrom(p => p.Tags));
 
-            CreateMap<Post, PostImageResponse>();
-            
             CreateMap<PageList<Post>, PageList<PostTagsResponse>>();
         }
     }

@@ -26,6 +26,6 @@ namespace ArquiteturaCamadas.Domain.Enums
         FailedTransaction,
 
         [Description("Format invalid for image")]
-        ÏnvalidImageFormat
+        InvalidImageFormat
     }
 }

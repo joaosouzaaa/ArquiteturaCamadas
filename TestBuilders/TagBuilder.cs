@@ -10,6 +10,7 @@ namespace TestBuilders
     {
         private string _tagName = GenerateRandomWord();
         private int _id = GenerateRandomNumber();
+        private List<Post> _postList = new List<Post>();
 
         public static TagBuilder NewObject() =>
             new TagBuilder();
@@ -18,7 +19,7 @@ namespace TestBuilders
             new Tag()
             {
                 Id = _id,
-                Posts = new List<Post>(),
+                Posts = _postList,
                 TagName = _tagName
             };
 
@@ -53,6 +54,13 @@ namespace TestBuilders
         public TagBuilder WithTagName(string tagName)
         {
             _tagName = tagName;
+
+            return this;
+        }
+
+        public TagBuilder WithPostList(List<Post> postList)
+        {
+            _postList = postList;
 
             return this;
         }

@@ -1,7 +1,6 @@
 ﻿using ArquiteturaCamadas.ApplicationService.AutoMapperSettings;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Post;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Post;
-using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Tag;
 using ArquiteturaCamadas.ApplicationService.Interfaces;
 using ArquiteturaCamadas.ApplicationService.Services.ServiceBase;
 using ArquiteturaCamadas.Business.Extensions;
@@ -34,7 +33,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
         {
             if (postSaveRequest.Image is not null)
                 if (!postSaveRequest.Image.FileName.ValidateFileFormat())
-                    return _notification.AddDomainNotification("Not Found", EMessage.ÏnvalidImageFormat.Description());
+                    return _notification.AddDomainNotification("Not Found", EMessage.InvalidImageFormat.Description());
 
             var post = postSaveRequest.MapTo<PostSaveRequest, Post>();
 
@@ -63,10 +62,12 @@ namespace ArquiteturaCamadas.ApplicationService.Services
             if (postUpdateRequest.Image is not null)
             {
                 if (!postUpdateRequest.Image.FileName.ValidateFileFormat())
-                    return _notification.AddDomainNotification("Image Format", EMessage.ÏnvalidImageFormat.Description());
+                    return _notification.AddDomainNotification("Image Format", EMessage.InvalidImageFormat.Description());
 
                 post.ImageBytes = GetImageBytes(postUpdateRequest.Image);
             }
+            else
+                post.ImageBytes = null;
 
             foreach (var tag in post.Tags.ToList())
             {
@@ -135,7 +136,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
                 var tag = await _tagService.FindByIdAsyncAsNoTrackingReturnsDomainObject(tagId);
 
                 if (tag is null)
-                    return _notification.AddDomainNotification("Not Found", EMessage.ÏnvalidImageFormat.Description().FormatTo("Tag"));
+                    return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Tag"));
 
                 post.Tags.Add(tag);
             }

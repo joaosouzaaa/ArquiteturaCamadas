@@ -22,6 +22,7 @@ namespace ArquiteturaCamadas.Infra.UnitOfWork
             catch
             {
                 _databaseFacade.RollbackTransaction();
+
                 throw;
             }
         }

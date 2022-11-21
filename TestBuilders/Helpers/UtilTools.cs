@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
+using Moq;
 using System.Text;
 
 namespace TestBuilders.Helpers
@@ -16,5 +18,10 @@ namespace TestBuilders.Helpers
                 ContentDisposition = "form-data; name=\"Image\"; filename=\"image.jpg\""
             };
         }
+
+        public static Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> MockIIncludableQuery<TEntity>()
+            where TEntity : class
+            =>
+            It.IsAny<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>();
     }
 }

@@ -12,13 +12,13 @@ namespace ArquiteturaCamadas.ApplicationService.AutoMapperSettings.Profiles
         {
             CreateMap<TagSaveRequest, Tag>();
 
+            CreateMap<TagUpdateRequest, Tag>();
+
             CreateMap<Tag, TagResponse>()
                 .ReverseMap();
 
             CreateMap<Tag, TagPostsResponse>()
                 .ForMember(tr => tr.Posts, map => map.MapFrom(t => t.Posts));
-
-            CreateMap<TagUpdateRequest, Tag>();
 
             CreateMap<PageList<Tag>, PageList<TagPostsResponse>>();
         }
