@@ -2,8 +2,8 @@
 {
     public sealed class AddressRequest
     {
-        public string ZipCode { get; set; }
-        public string Number { get; set; }
+        public required string ZipCode { get; set; }
+        public required string Number { get; set; }
         public string? Complement { get; set; }
     }
 }

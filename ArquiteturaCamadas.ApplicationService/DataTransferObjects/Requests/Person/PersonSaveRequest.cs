@@ -5,9 +5,9 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Per
 {
     public sealed class PersonSaveRequest
     {
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public EGenderRequest Gender { get; set; }
-        public AddressRequest Address { get; set; }
+        public required string Name { get; set; }
+        public required int Age { get; set; }
+        public required EGenderRequest Gender { get; set; }
+        public required AddressRequest Address { get; set; }
     }
 }

@@ -9,7 +9,17 @@
     }
   },
   "profiles": {
-    "ArquiteturaCamadas.Api": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5208",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ArquiteturaCamadas.Infra.Migrations
 {
+    /// <inheritdoc />
     public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -15,7 +17,7 @@ namespace ArquiteturaCamadas.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    zip_code = table.Column<string>(type: "char(8)", nullable: false),
+                    zipcode = table.Column<string>(name: "zip_code", type: "char(8)", nullable: false),
                     district = table.Column<string>(type: "varchar(50)", nullable: false),
                     number = table.Column<string>(type: "varchar(10)", nullable: false),
                     complement = table.Column<string>(type: "varchar(50)", nullable: true),
@@ -36,7 +38,7 @@ namespace ArquiteturaCamadas.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     message = table.Column<string>(type: "varchar(600)", nullable: false),
-                    image_bytes = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    imagebytes = table.Column<byte[]>(name: "image_bytes", type: "varbinary(max)", nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -50,7 +52,7 @@ namespace ArquiteturaCamadas.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    tag_name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    tagname = table.Column<string>(name: "tag_name", type: "varchar(50)", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -139,6 +141,7 @@ namespace ArquiteturaCamadas.Infra.Migrations
                 column: "TagsId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

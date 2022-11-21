@@ -4,7 +4,7 @@ namespace ArquiteturaCamadas.Domain.Entities
 {
     public sealed class Tag : BaseEntity
     {
-        public string TagName { get; set; }
+        public required string TagName { get; set; }
         
         public List<Post> Posts { get; set; }
     }

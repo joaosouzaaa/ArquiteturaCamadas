@@ -24,6 +24,7 @@ namespace TestBuilders
                 Gender = _gender,
                 Id = _id,
                 Name = _name,
+                AddressId = GenerateRandomNumber(),
                 Address = AddressBuilder.NewObject().DomainBuild()
             };
 
