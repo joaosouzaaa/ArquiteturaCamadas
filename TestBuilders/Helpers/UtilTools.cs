@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using System.Text;
+using System.Text.Json;
 
 namespace TestBuilders.Helpers
 {
