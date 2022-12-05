@@ -5,8 +5,12 @@ using ArquiteturaCamadas.Business.Settings.PaginationSettings;
 
 namespace ArquiteturaCamadas.ApplicationService.Interfaces
 {
-    public interface IPostService : ICommandsService<PostSaveRequest, PostUpdateRequest>
+    public interface IPostService
     {
+        Task<bool> AddAsync(PostSaveRequest postSaveRequest);
+        Task<bool> UpdateUnreapeatTagsSearchAsync(PostUpdateRequest postUpdateRequest);
+        Task<bool> DeleteAsync(int id);
+        Task<bool> UpdateManyToManyAsync(PostUpdateRequest postUpdateRequest);
         Task<PageList<PostTagsResponse>> FindAllEntitiesWithPaginationAsync(PageParams pageParams);
         Task<List<PostTagsResponse>> FindAllEntitiesAsync();
         Task<PostTagsResponse> FindByIdAsync(int id);

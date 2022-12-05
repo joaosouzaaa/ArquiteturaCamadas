@@ -7,6 +7,6 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Pos
         public int Id { get; set; }
         public string Message { get; set; }
         public IFormFile? Image { get; set; }
-        public List<int> TagsIds { get; set; }
+        public List<int>? TagsIds { get; set; }
     }
 }

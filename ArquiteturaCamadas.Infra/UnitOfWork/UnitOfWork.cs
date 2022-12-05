@@ -21,14 +21,16 @@ namespace ArquiteturaCamadas.Infra.UnitOfWork
             }
             catch
             {
-                _databaseFacade.RollbackTransaction();
+                RollBackDatabaseTransaction();
 
                 throw;
             }
         }
 
-        public void RollbackTransaction() => _databaseFacade.RollbackTransaction();
+        public void RollbackTransaction() => RollBackDatabaseTransaction();
 
         public void BeginTransaction() => _databaseFacade.BeginTransaction();   
+
+        private void RollBackDatabaseTransaction() => _databaseFacade.RollbackTransaction();
     }
 }

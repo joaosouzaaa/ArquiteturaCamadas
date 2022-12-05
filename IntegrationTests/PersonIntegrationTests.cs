@@ -10,23 +10,27 @@ namespace IntegrationTests
         [Fact]
         public async Task AddAsync_ReturnsSuccess()
         {
-            var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
+            // A A
+            var saveResult = await AddPersonAsync();
 
-            var saveResult = await AddPersonAsync(personSaveRequest);
-
+            // A
             Assert.True(saveResult);
         }
 
         [Fact]
         public async Task UpdateAsync_ReturnsSuccess()
         {
-            var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-            var saveResult = await AddPersonAsync(personSaveRequest);
+            // A
+            var saveResult = await AddPersonAsync();
+
             var personUpdateRequest = PersonBuilder.NewObject().WithId(1).UpdateRequestBuild();
-            var requestUri = "api/Person/update-person";
 
-            var updateResult = await CreatePutAsJsonAsync(requestUri, personUpdateRequest);
+            var updateAsyncRequestUri = "api/Person/update-person";
+            
+            // A
+            var updateResult = await CreatePutAsJsonAsync(updateAsyncRequestUri, personUpdateRequest);
 
+            // A
             Assert.True(saveResult);
             Assert.True(updateResult);
         }
@@ -34,12 +38,15 @@ namespace IntegrationTests
         [Fact]
         public async Task DeleteAsync_ReturnsSuccess()
         {
-            var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-            var saveResult = await AddPersonAsync(personSaveRequest);
-            var requestUri = "api/Person/delete-person?id=1";
+            // A
+            var saveResult = await AddPersonAsync();
 
-            var deleteResult = await CreateDeleteAsync(requestUri);
+            var deleteAsyncRequestUri = "api/Person/delete-person?id=1";
+
+            // A
+            var deleteResult = await CreateDeleteAsync(deleteAsyncRequestUri);
             
+            // A
             Assert.True(saveResult);
             Assert.True(deleteResult);
         }
@@ -47,12 +54,15 @@ namespace IntegrationTests
         [Fact]
         public async Task FindByIdAsync_ReturnsEntity()
         {
-            var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-            var saveResult = await AddPersonAsync(personSaveRequest);
-            var requestUri = "api/Person/find-person?id=1";
+            // A
+            var saveResult = await AddPersonAsync();
 
-            var getResult = await CreateGetAsync<PersonResponse>(requestUri);
+            var findByidAsyncRequestUri = "api/Person/find-person?id=1";
 
+            // A
+            var getResult = await CreateGetAsync<PersonResponse>(findByidAsyncRequestUri);
+
+            // A
             Assert.True(saveResult);
             Assert.NotNull(getResult);
         }
@@ -60,12 +70,16 @@ namespace IntegrationTests
         [Fact]
         public async Task FindAllEntitiesAsync_ReturnsEntities()
         {
+            // A
             var numberOfTimesToAdd = new Random().Next(1, 10);
             var saveResult = await AddPersonsInRangeAsync(numberOfTimesToAdd);
-            var requestUri = "api/Person/find-all-persons";
 
-            var getAllResult = await CreateGetAllAsync<PersonResponse>(requestUri);
+            var findAllEntitiesAsyncRequestUri = "api/Person/find-all-persons";
 
+            // A
+            var getAllResult = await CreateGetAllAsync<PersonResponse>(findAllEntitiesAsyncRequestUri);
+
+            // A
             Assert.True(saveResult);
             Assert.Equal(getAllResult.Count, numberOfTimesToAdd);
         }
@@ -73,19 +87,27 @@ namespace IntegrationTests
         [Fact]
         public async Task FindAllEntitiesWithPaginationAsync_ReturnsEntities()
         {
+            // A
             var numberOfTimesToAdd = 4;
             var saveResult = await AddPersonsInRangeAsync(numberOfTimesToAdd);
-            var requestUri = "api/Person/find-all-persons-paginated?PageSize=1&PageNumber=1";
 
-            var getAllPaginatedResult = await CreateGetAllPaginatedAsync<PersonResponse>(requestUri);
+            var findAllEntitiesWithPaginationAsyncRequestUri = "api/Person/find-all-persons-paginated?PageSize=1&PageNumber=1";
 
+            // A
+            var getAllPaginatedResult = await CreateGetAllPaginatedAsync<PersonResponse>(findAllEntitiesWithPaginationAsyncRequestUri);
+
+            // A
             Assert.True(saveResult);
             Assert.NotEmpty(getAllPaginatedResult.Result);
             Assert.NotEqual(getAllPaginatedResult.Result.Count, numberOfTimesToAdd);
         }
 
-        private async Task<bool> AddPersonAsync(PersonSaveRequest personSaveRequest) =>
-            await CreatePostAsJsonAsync(requestUri: "api/Person/add-person", personSaveRequest);
+        private async Task<bool> AddPersonAsync()
+        {
+            var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
+            
+            return await CreatePostAsJsonAsync(requestUri: "api/Person/add-person", personSaveRequest);
+        }
 
         private async Task<bool> AddPersonsInRangeAsync(int range)
         {
@@ -93,9 +115,7 @@ namespace IntegrationTests
 
             for(var i = 0; i < range; i++)
             {
-                var personSaveRequest = PersonBuilder.NewObject().SaveRequestBuild();
-
-                saveResult = await AddPersonAsync(personSaveRequest);
+                saveResult = await AddPersonAsync();
             }
 
             return saveResult;

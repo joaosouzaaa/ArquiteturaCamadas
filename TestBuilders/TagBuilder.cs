@@ -2,13 +2,12 @@
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Post;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Tag;
 using ArquiteturaCamadas.Domain.Entities;
-using TestBuilders.BaseBuilders;
 
 namespace TestBuilders
 {
-    public sealed class TagBuilder : BuilderBase
+    public sealed class TagBuilder
     {
-        private string _tagName = GenerateRandomWord();
+        private string _tagName = "tag name";
         private int _id = GenerateRandomNumber();
         private List<Post> _postList = new List<Post>();
 
@@ -64,5 +63,15 @@ namespace TestBuilders
 
             return this;
         }
+
+        public TagBuilder WithId(int id)
+        {
+            _id = id;
+
+            return this;
+        }
+
+        private static int GenerateRandomNumber() =>
+            new Random().Next();
     }
 }

@@ -32,6 +32,7 @@ namespace UnitTests.ServiceTests
         {
             // A
             var cep = "82145154";
+
             var viaCepAddressResponse = ViaCepBuilder.NewObject().AddressResponseBuild();
             var viaCepAddressResponseJsonString = JsonSerializer.Serialize(viaCepAddressResponse);
             var httpResponseMessage = new HttpResponseMessage()
@@ -58,6 +59,7 @@ namespace UnitTests.ServiceTests
 
             // A
             VerifyGetAddressFromCepAsyncMocks(httpClientMockTimes: 1, notificationMockTimes: 0);
+
             Assert.NotNull(serviceResult);
         }
 
@@ -66,6 +68,7 @@ namespace UnitTests.ServiceTests
         {
             // A
             var invalidCep = "kakak";
+
             _notificationHandlerMock.Setup(n => n.AddDomainNotification(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
 
             // A
@@ -73,6 +76,7 @@ namespace UnitTests.ServiceTests
 
             // A
             VerifyGetAddressFromCepAsyncMocks(httpClientMockTimes: 0, notificationMockTimes: 1);
+
             Assert.Null(serviceResult);
         }
 
@@ -81,6 +85,7 @@ namespace UnitTests.ServiceTests
         {
             // A
             var cep = "82145154";
+
             var httpResponseMessage = new HttpResponseMessage()
             {
                 Content = new StringContent("{}"),
@@ -105,6 +110,7 @@ namespace UnitTests.ServiceTests
 
             // A
             VerifyGetAddressFromCepAsyncMocks(httpClientMockTimes: 1, notificationMockTimes: 1);
+
             Assert.Null(serviceResult);
         }
 

@@ -43,26 +43,50 @@ namespace UnitTests.ControllerTests
         }
 
         [Fact]
-        public async Task UpdateAsync_ReturnsTrue()
+        public async Task UpdateUnreapeatTagsSearchAsync_ReturnsTrue()
         {
             var postUpdateRequest = PostBuilder.NewObject().UpdateRequestBuild();
-            _postServiceMock.Setup(ps => ps.UpdateAsync(postUpdateRequest)).ReturnsAsync(true);
+            _postServiceMock.Setup(ps => ps.UpdateUnreapeatTagsSearchAsync(postUpdateRequest)).ReturnsAsync(true);
 
-            var controllerResult = await _postController.UpdateAsync(postUpdateRequest);
+            var controllerResult = await _postController.UpdateUnreapeatTagsSearchAsync(postUpdateRequest);
 
-            _postServiceMock.Verify(ps => ps.UpdateAsync(postUpdateRequest), Times.Once());
+            _postServiceMock.Verify(ps => ps.UpdateUnreapeatTagsSearchAsync(postUpdateRequest), Times.Once());
             Assert.True(controllerResult);
         }
 
         [Fact]
-        public async Task UpdateAsync_ReturnsFalse()
+        public async Task UpdateUnreapeatTagsSearchAsync_ReturnsFalse()
         {
             var postUpdateRequest = PostBuilder.NewObject().UpdateRequestBuild();
-            _postServiceMock.Setup(ps => ps.UpdateAsync(postUpdateRequest)).ReturnsAsync(false);
+            _postServiceMock.Setup(ps => ps.UpdateUnreapeatTagsSearchAsync(postUpdateRequest)).ReturnsAsync(false);
 
-            var controllerResult = await _postController.UpdateAsync(postUpdateRequest);
+            var controllerResult = await _postController.UpdateUnreapeatTagsSearchAsync(postUpdateRequest);
 
-            _postServiceMock.Verify(ps => ps.UpdateAsync(postUpdateRequest), Times.Once());
+            _postServiceMock.Verify(ps => ps.UpdateUnreapeatTagsSearchAsync(postUpdateRequest), Times.Once());
+            Assert.False(controllerResult);
+        }
+
+        [Fact]
+        public async Task UpdateManyToManyAsync_ReturnsTrue()
+        {
+            var postUpdateRequest = PostBuilder.NewObject().UpdateRequestBuild();
+            _postServiceMock.Setup(ps => ps.UpdateManyToManyAsync(postUpdateRequest)).ReturnsAsync(true);
+
+            var controllerResult = await _postController.UpdateManyToManyAsync(postUpdateRequest);
+
+            _postServiceMock.Verify(ps => ps.UpdateManyToManyAsync(postUpdateRequest), Times.Once());
+            Assert.True(controllerResult);
+        }
+
+        [Fact]
+        public async Task UpdateManyToManyAsync_ReturnsFalse()
+        {
+            var postUpdateRequest = PostBuilder.NewObject().UpdateRequestBuild();
+            _postServiceMock.Setup(ps => ps.UpdateManyToManyAsync(postUpdateRequest)).ReturnsAsync(false);
+
+            var controllerResult = await _postController.UpdateManyToManyAsync(postUpdateRequest);
+
+            _postServiceMock.Verify(ps => ps.UpdateManyToManyAsync(postUpdateRequest), Times.Once());
             Assert.False(controllerResult);
         }
 

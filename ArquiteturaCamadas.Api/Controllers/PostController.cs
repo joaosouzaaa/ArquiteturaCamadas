@@ -26,8 +26,13 @@ namespace ArquiteturaCamadas.Api.Controllers
 
         [HttpPut("update-post")]
         [CommandsResponseTypes]
-        public async Task<bool> UpdateAsync([FromForm] PostUpdateRequest postUpdateRequest) =>
-            await _postService.UpdateAsync(postUpdateRequest);
+        public async Task<bool> UpdateUnreapeatTagsSearchAsync([FromForm] PostUpdateRequest postUpdateRequest) =>
+            await _postService.UpdateUnreapeatTagsSearchAsync(postUpdateRequest);
+
+        [HttpPut("update-post-many-to-many")]
+        [CommandsResponseTypes]
+        public async Task<bool> UpdateManyToManyAsync([FromForm] PostUpdateRequest postUpdateRequest) =>
+            await _postService.UpdateManyToManyAsync(postUpdateRequest);
 
         [HttpDelete("delete-post")]
         [CommandsResponseTypes]

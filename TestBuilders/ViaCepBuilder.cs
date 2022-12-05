@@ -1,21 +1,20 @@
 ﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.ViaCep;
-using TestBuilders.BaseBuilders;
 
 namespace TestBuilders
 {
-    public sealed class ViaCepBuilder : BuilderBase
+    public sealed class ViaCepBuilder
     {
         public static ViaCepBuilder NewObject() => new ViaCepBuilder();
 
         public ViaCepAddressResponse AddressResponseBuild() =>
             new ViaCepAddressResponse()
             {
-                Bairro = GenerateRandomWord(),
-                Cep = GenerateRandomWord(),
-                Complemento = GenerateRandomWord(),
-                Localidade = GenerateRandomWord(),
-                Logradouro = GenerateRandomWord(),
-                Uf = GenerateRandomWord()
+                Bairro = "bairro aqui",
+                Cep = "821828289",
+                Complemento = "",
+                Localidade = "copmplemento randiom",
+                Logradouro = "rua das ruas",
+                Uf = "cwb"
             };
     }
 }

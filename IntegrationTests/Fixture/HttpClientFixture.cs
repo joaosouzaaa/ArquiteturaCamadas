@@ -2,6 +2,7 @@
 using ArquiteturaCamadas.Infra.Contexts;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
@@ -29,12 +30,27 @@ namespace IntegrationTests.Fixture
 
                         services.AddDbContext<ArquiteturaCamadasDbContext>(options =>
                         {
+                            options.ConfigureWarnings(o => o.Ignore(InMemoryEventId.TransactionIgnoredWarning));
                             options.UseInMemoryDatabase("DbForTests", root);
                         });
                     });
                 });
 
             _httpClient = appFactory.CreateClient();
+        }
+
+        protected async Task<bool> CreatePostAsync(string requestUri, HttpContent httpContent)
+        {
+            var saveHttpResponseMessage = await _httpClient.PostAsync(requestUri, httpContent);
+
+            return saveHttpResponseMessage.IsSuccessStatusCode;
+        }
+
+        protected async Task<bool> CreatePutAsync(string requestUri, HttpContent httpContent)
+        {
+            var updateHttpResponseMessage = await _httpClient.PutAsync(requestUri, httpContent);
+
+            return updateHttpResponseMessage.IsSuccessStatusCode;
         }
 
         protected async Task<bool> CreatePostAsJsonAsync<TSave>(string requestUri, TSave save)
@@ -70,18 +86,12 @@ namespace IntegrationTests.Fixture
 
         protected async Task<List<TResponse>> CreateGetAllAsync<TResponse>(string requesUri)
             where TResponse : class
-        {
-            var getAllHttpResponseMessage = await _httpClient.GetAsync(requesUri);
-
-            return await getAllHttpResponseMessage.Content.ReadFromJsonAsync<List<TResponse>>();
-        }
+            =>
+            await _httpClient.GetFromJsonAsync<List<TResponse>>(requesUri);
 
         protected async Task<PageList<TResponse>> CreateGetAllPaginatedAsync<TResponse>(string requesUri)
             where TResponse : class
-        {
-            var getAllPaginatedHttpResponseMessage = await _httpClient.GetAsync(requesUri);
-
-            return await getAllPaginatedHttpResponseMessage.Content.ReadFromJsonAsync<PageList<TResponse>>();
-        }
+            =>
+            await _httpClient.GetFromJsonAsync<PageList<TResponse>>(requesUri);
     }
 }

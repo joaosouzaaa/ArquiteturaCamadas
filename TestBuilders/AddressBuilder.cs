@@ -1,19 +1,18 @@
 ﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Address;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Address;
 using ArquiteturaCamadas.Domain.Entities;
-using TestBuilders.BaseBuilders;
 
 namespace TestBuilders
 {
-    public sealed class AddressBuilder : BuilderBase
+    public sealed class AddressBuilder 
     {
-        private string _city = GenerateRandomWord();
-        private string _zipCode = "82820183";
-        private string _street = GenerateRandomWord();
+        private string _city = "palavra alkeaotiria";
+        private string _zipCode = "78557102";
+        private string _street = "joao";
         private string _state = "pr";
         private string _number = "8181";
-        private string _complement = GenerateRandomWord();
-        private string _district = GenerateRandomWord();
+        private string _complement = "random";
+        private string _district = "mock";
 
         public static AddressBuilder NewObject() => new AddressBuilder();
 

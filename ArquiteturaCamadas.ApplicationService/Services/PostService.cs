@@ -42,17 +42,23 @@ namespace ArquiteturaCamadas.ApplicationService.Services
 
             post.Tags = new List<Tag>();
 
-            foreach (var tagId in postSaveRequest.TagsIds)
+            if(postSaveRequest.TagsIds != null)
             {
-                var tag = await _tagService.FindByIdAsyncAsNoTrackingReturnsDomainObject(tagId);
+                foreach (var tagId in postSaveRequest.TagsIds)
+                {
+                    var tag = await _tagService.FindByIdAsyncAsNoTrackingReturnsDomainObject(tagId);
 
-                post.Tags.Add(tag);
+                    if (tag is null)
+                        return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Tag"));
+
+                    post.Tags.Add(tag);
+                }
             }
 
             return await _postRepository.AddAsync(post);
         }
 
-        public async Task<bool> UpdateAsync(PostUpdateRequest postUpdateRequest)
+        public async Task<bool> UpdateUnreapeatTagsSearchAsync(PostUpdateRequest postUpdateRequest)
         {
             var post = await _postRepository.FindByIdAsync(postUpdateRequest.Id, p => p.Include(p => p.Tags), false);
 
@@ -69,25 +75,72 @@ namespace ArquiteturaCamadas.ApplicationService.Services
             else
                 post.ImageBytes = null;
 
-            foreach (var tag in post.Tags.ToList())
-            {
-                if (!postUpdateRequest.TagsIds.Contains(tag.Id))
-                    post.Tags.Remove(tag);
-            }
             post.Message = postUpdateRequest.Message;
 
             if (!await ValidateAsync(post))
                 return false;
 
+            if (postUpdateRequest.TagsIds != null)
+            {
+                foreach (var tag in post.Tags.ToList())
+                {
+                    if (!postUpdateRequest.TagsIds.Contains(tag.Id))
+                        post.Tags.Remove(tag);
+                }
+            }
+
             var removeUpdateResult = await _postRepository.UpdateAsync(post);
 
-            var tagsIds = post.Tags.Select(t => t.Id);
-            var comparableIds = postUpdateRequest.TagsIds.Except(tagsIds).ToList();
+            if(postUpdateRequest.TagsIds != null)
+            {
+                var tagsIds = post.Tags.Select(t => t.Id);
+                var comparableIds = postUpdateRequest.TagsIds.Except(tagsIds).ToList();
 
-            if (removeUpdateResult is true && comparableIds.Any())
-                return await AddNewTagsAsync(postUpdateRequest, post);
+                if (removeUpdateResult is true && comparableIds.Any())
+                    return await AddNewTagsAsync(postUpdateRequest, post, comparableIds);
+            }
 
             return removeUpdateResult;
+        }
+
+        public async Task<bool> UpdateManyToManyAsync(PostUpdateRequest postUpdateRequest)
+        {
+            var post = await _postRepository.FindByIdAsync(postUpdateRequest.Id, p => p.Include(p => p.Tags), false);
+
+            if (post is null)
+                return _notification.AddDomainNotification("Not found", EMessage.NotFound.Description().FormatTo("Post"));
+
+            if (postUpdateRequest.Image is not null)
+            {
+                if (!postUpdateRequest.Image.FileName.ValidateFileFormat())
+                    return _notification.AddDomainNotification("Image Format", EMessage.InvalidImageFormat.Description());
+
+                post.ImageBytes = GetImageBytes(postUpdateRequest.Image);
+            }
+            else
+                post.ImageBytes = null;
+
+            post.Message = postUpdateRequest.Message;
+
+            if (!await ValidateAsync(post))
+                return false;
+
+            post.Tags.Clear();
+
+            if(postUpdateRequest.TagsIds != null)
+            {
+                foreach (var tagId in postUpdateRequest.TagsIds)
+                {
+                    var tag = await _tagService.FindByIdAsyncAsNoTrackingReturnsDomainObject(tagId);
+
+                    if (tag is null)
+                        return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Tag"));
+
+                    post.Tags.Add(tag);
+                }
+            }
+
+            return await _postRepository.UpdateAsync(post);
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -129,9 +182,9 @@ namespace ArquiteturaCamadas.ApplicationService.Services
             }
         }
 
-        private async Task<bool> AddNewTagsAsync(PostUpdateRequest postUpdateRequest, Post post)
+        private async Task<bool> AddNewTagsAsync(PostUpdateRequest postUpdateRequest, Post post, List<int> differentIds)
         {
-            foreach (var tagId in postUpdateRequest.TagsIds)
+            foreach (var tagId in differentIds)
             {
                 var tag = await _tagService.FindByIdAsyncAsNoTrackingReturnsDomainObject(tagId);
 

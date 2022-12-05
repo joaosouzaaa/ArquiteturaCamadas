@@ -36,10 +36,12 @@ namespace ArquiteturaCamadas.ApplicationService.Services
 
         public async Task<bool> UpdateAsync(TagUpdateRequest tagUpdateRequest)
         {
-            if (!await _tagRepository.HaveObjectInDbAsync(t => t.Id == tagUpdateRequest.Id))
+            var tag = await _tagRepository.FindByIdAsync(tagUpdateRequest.Id, null, true);
+
+            if(tag is null)
                 return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Tag"));
 
-            var tag = tagUpdateRequest.MapTo<TagUpdateRequest, Tag>();
+            tag = tagUpdateRequest.MapTo<TagUpdateRequest, Tag>();
 
             if (!await ValidateAsync(tag))
                 return false;

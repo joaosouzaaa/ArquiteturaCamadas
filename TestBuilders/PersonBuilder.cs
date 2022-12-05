@@ -3,16 +3,15 @@ using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Person;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Person;
 using ArquiteturaCamadas.Domain.Enums;
 using Bogus;
-using TestBuilders.BaseBuilders;
 
 namespace TestBuilders
 {
-    public sealed class PersonBuilder : BuilderBase
+    public sealed class PersonBuilder
     {
         private int _age = 20;
         private EGender _gender = new Faker().PickRandom<EGender>();
         private int _id = GenerateRandomNumber();
-        private string _name = GenerateRandomWord();
+        private string _name = "joao";
         private EGenderRequest _genderRequest = new Faker().PickRandom<EGenderRequest>();
 
         public static PersonBuilder NewObject() => new PersonBuilder();
@@ -77,5 +76,8 @@ namespace TestBuilders
 
             return this;
         }
+
+        private static int GenerateRandomNumber() =>
+            new Random().Next();
     }
 }
