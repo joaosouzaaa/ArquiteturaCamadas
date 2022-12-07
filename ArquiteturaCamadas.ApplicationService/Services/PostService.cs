@@ -33,7 +33,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
         {
             if (postSaveRequest.Image is not null)
                 if (!postSaveRequest.Image.FileName.ValidateFileFormat())
-                    return _notification.AddDomainNotification("Not Found", EMessage.InvalidImageFormat.Description());
+                    return _notification.AddDomainNotification("Image Format", EMessage.InvalidImageFormat.Description());
 
             var post = postSaveRequest.MapTo<PostSaveRequest, Post>();
 

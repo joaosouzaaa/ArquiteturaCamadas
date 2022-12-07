@@ -53,7 +53,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
             var person = await _personRepository.FindByIdAsync(personUpdateRequest.Id, p => p.Include(p => p.Address), true);
             
             if (person is null)
-                return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Person"));
+                return _notification.AddDomainNotification(EMessage.NotFound.ToString(), EMessage.NotFound.Description().FormatTo("Person"));
 
             var address = await _cepService.GetAddressFromCepAsync(personUpdateRequest.Address.ZipCode);
 
@@ -78,7 +78,7 @@ namespace ArquiteturaCamadas.ApplicationService.Services
         public async Task<bool> DeleteAsync(int id)
         {
             if (!await _personRepository.HaveObjectInDbAsync(p => p.Id == id))
-                return _notification.AddDomainNotification("Not Found", EMessage.NotFound.Description().FormatTo("Person"));
+                return _notification.AddDomainNotification(EMessage.NotFound.ToString(), EMessage.NotFound.Description().FormatTo("Person"));
 
             return await _personRepository.DeleteAsync(id);
         }

@@ -5,7 +5,7 @@ namespace ArquiteturaCamadas.Business.Settings.NotificationSettings
 {
     public class NotificationHandler : INotificationHandler
     {
-        private List<DomainNotification> _notificationList;
+        private readonly List<DomainNotification> _notificationList;
 
         public NotificationHandler()
         {

@@ -9,6 +9,8 @@ namespace ArquiteturaCamadas.Infra.Contexts
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public ArquiteturaCamadasDbContext(DbContextOptions<ArquiteturaCamadasDbContext> options) : base(options)
         {

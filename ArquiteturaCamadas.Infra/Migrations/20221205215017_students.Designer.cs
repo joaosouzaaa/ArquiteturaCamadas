@@ -4,6 +4,7 @@ using ArquiteturaCamadas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArquiteturaCamadas.Infra.Migrations
 {
     [DbContext(typeof(ArquiteturaCamadasDbContext))]
-    partial class ArquiteturaCamadasDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205215017_students")]
+    partial class students
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

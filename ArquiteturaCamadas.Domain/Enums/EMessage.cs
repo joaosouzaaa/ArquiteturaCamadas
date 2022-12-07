@@ -13,19 +13,13 @@ namespace ArquiteturaCamadas.Domain.Enums
         [Description("{0} not found")]
         NotFound,
 
-        [Description("{0} age has to be greater than 18 years")]
-        InvalidAge,
-
         [Description("An unexpected error happened")]
         UnexpectedError,
 
-        [Description("Invalid Credencials")]
-        InvalidCredencials,
-
-        [Description("Your transaction failed with status code {0}")]
-        FailedTransaction,
-
         [Description("Format invalid for image")]
-        InvalidImageFormat
+        InvalidImageFormat,
+
+        [Description("{0} has to be greater than {1}")]
+        GreaterThan
     }
 }

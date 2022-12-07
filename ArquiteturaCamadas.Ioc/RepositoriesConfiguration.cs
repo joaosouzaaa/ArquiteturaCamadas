@@ -11,6 +11,8 @@ namespace ArquiteturaCamadas.Ioc
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
         }
     }
 }

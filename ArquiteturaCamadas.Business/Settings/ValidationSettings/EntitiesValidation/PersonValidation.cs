@@ -16,8 +16,8 @@ namespace ArquiteturaCamadas.Business.Settings.ValidationSettings.EntitiesValida
                ? EMessage.Required.Description().FormatTo("Name")
                : EMessage.MoreExpected.Description().FormatTo("Name", "3 to 50"));
 
-            RuleFor(p => p.Age).GreaterThan(18)
-                .WithMessage(EMessage.InvalidAge.Description().FormatTo("{PropertyValue}"));
+            RuleFor(p => p.Age).GreaterThan(0)
+                .WithMessage(EMessage.GreaterThan.Description().FormatTo("Age", "0 years"));
         }
     }
 }

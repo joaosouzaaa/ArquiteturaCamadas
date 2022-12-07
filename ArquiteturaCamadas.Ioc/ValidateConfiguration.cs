@@ -13,6 +13,8 @@ namespace ArquiteturaCamadas.Ioc
             services.AddScoped<IValidator<Address>, AddressValidation>();
             services.AddScoped<IValidator<Post>, PostValidation>();
             services.AddScoped<IValidator<Tag>, TagValidation>();
+            services.AddScoped<IValidator<Student>, PersonValidation>();
+            services.AddScoped<IValidator<Project>, ProjectValidation>();
         }
     }
 }

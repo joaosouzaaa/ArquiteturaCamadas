@@ -3,7 +3,7 @@ using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Address
 
 namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Person
 {
-    public sealed class PersonSaveRequest
+    public class PersonSaveRequest
     {
         public required string Name { get; set; }
         public required int Age { get; set; }

@@ -12,6 +12,8 @@ namespace ArquiteturaCamadas.Ioc
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ICepService, CepService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IProjectService, ProjectService>();
         }
     }
 }

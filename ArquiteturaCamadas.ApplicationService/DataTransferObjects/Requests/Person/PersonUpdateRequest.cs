@@ -3,7 +3,7 @@ using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Address
 
 namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Person
 {
-    public sealed class PersonUpdateRequest
+    public class PersonUpdateRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }
