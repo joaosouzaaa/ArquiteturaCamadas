@@ -4,10 +4,10 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Pe
 {
     public class PersonResponse
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public ushort Gender { get; set; }
-        public AddressResponse Address { get; set; }
+        public required int Id { get; set; }
+        public required string Name { get; set; }
+        public required int Age { get; set; }
+        public required ushort Gender { get; set; }
+        public required AddressResponse Address { get; set; }
     }
 }

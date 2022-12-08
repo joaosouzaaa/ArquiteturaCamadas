@@ -6,6 +6,6 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Stu
 {
     public sealed class StudentSaveRequest : PersonSaveRequest
     {
-        public ESchoolDivisionRequest SchoolDivision { get; set; }
+        public required ESchoolDivisionRequest SchoolDivision { get; set; }
     }
 }

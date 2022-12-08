@@ -4,7 +4,7 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Pos
 {
     public sealed class PostSaveRequest
     {
-        public string Message { get; set; }
+        public required string Message { get; set; }
         public IFormFile? Image { get; set; }
         public List<int>? TagsIds { get; set; }
     }

@@ -4,8 +4,8 @@ namespace ArquiteturaCamadas.Domain.Entities
 {
     public sealed class Student : Person
     {
-        public ESchoolDivision SchoolDivision { get; set; } 
+        public required ESchoolDivision SchoolDivision { get; set; } 
 
-        public List<Project> Projects { get; set; }
+        public required List<Project> Projects { get; set; }
     }
 }

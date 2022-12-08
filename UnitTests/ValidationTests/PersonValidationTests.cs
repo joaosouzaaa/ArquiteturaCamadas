@@ -36,7 +36,6 @@ namespace UnitTests.ValidationTests
 
         [Theory]
         [InlineData(-2)]
-        [InlineData(17)]
         [InlineData(0)]
         public async Task ValidatePerson_AgeInvalid_ReturnsFalse(int age)
         {

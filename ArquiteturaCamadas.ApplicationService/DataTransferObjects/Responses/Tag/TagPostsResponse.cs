@@ -4,8 +4,8 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Ta
 {
     public sealed class TagPostsResponse
     {
-        public int Id { get; set; }
-        public string TagName { get; set; }
-        public List<PostResponse> Posts { get; set; }
+        public required int Id { get; set; }
+        public required string TagName { get; set; }
+        public required List<PostResponse> Posts { get; set; }
     }
 }

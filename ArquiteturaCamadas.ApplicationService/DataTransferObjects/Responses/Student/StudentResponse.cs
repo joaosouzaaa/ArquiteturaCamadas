@@ -5,8 +5,8 @@ namespace ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.St
 {
     public sealed class StudentResponse : PersonResponse
     {
-        public ushort SchoolDivision { get; set; }
+        public required ushort SchoolDivision { get; set; }
 
-        public List<ProjectResponse> Projects { get; set; }
+        public required List<ProjectResponse> Projects { get; set; }
     }
 }

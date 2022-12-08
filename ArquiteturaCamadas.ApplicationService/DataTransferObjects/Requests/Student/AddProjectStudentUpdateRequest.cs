@@ -2,7 +2,7 @@
 {
     public sealed class ProjectStudentRelationShipArgument
     {
-        public int StudentId { get; set; }
-        public int ProjectId { get; set; }
+        public required int StudentId { get; set; }
+        public required int ProjectId { get; set; }
     }
 }

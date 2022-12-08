@@ -2,6 +2,6 @@
 {
     public sealed class TagSaveRequest
     {
-        public string TagName { get; set; }
+        public required string TagName { get; set; }
     }
 }

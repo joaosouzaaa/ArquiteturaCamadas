@@ -6,6 +6,6 @@ namespace ArquiteturaCamadas.Domain.Entities
     {
         public required string TagName { get; set; }
         
-        public List<Post> Posts { get; set; }
+        public required List<Post> Posts { get; set; }
     }
 }
