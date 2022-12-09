@@ -73,5 +73,12 @@ namespace TestBuilders
 
             return this;
         }
+
+        public ProjectBuilder WithId(int id)
+        {
+            _id = id;
+
+            return this;
+        }
     }
 }

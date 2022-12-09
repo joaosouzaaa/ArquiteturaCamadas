@@ -1,4 +1,5 @@
-﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Student;
+﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Arguments;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Student;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Student;
 using ArquiteturaCamadas.ApplicationService.Interfaces.ServiceBase;
 

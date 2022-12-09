@@ -1,4 +1,5 @@
-﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Enums;
+﻿using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Arguments;
+using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Enums;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Address;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Requests.Student;
 using ArquiteturaCamadas.ApplicationService.DataTransferObjects.Responses.Address;
@@ -84,5 +85,19 @@ namespace TestBuilders
 
         private static int GenerateRandomNumber() =>
             new Random().Next();
+
+        public StudentBuilder WithProjectId(int projectId)
+        {
+            _projectId = projectId;
+
+            return this;
+        }
+
+        public StudentBuilder WithProjects(List<Project> projects)
+        {
+            _projects = projects;
+
+            return this;
+        }
     }
 }

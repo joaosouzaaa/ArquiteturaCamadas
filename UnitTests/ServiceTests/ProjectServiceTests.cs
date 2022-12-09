@@ -8,6 +8,7 @@ using ArquiteturaCamadas.Domain.Entities;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
+using System.Linq.Expressions;
 using TestBuilders;
 using TestBuilders.Helpers;
 
@@ -138,7 +139,165 @@ namespace UnitTests.ServiceTests
 
             // A
             VerifyUpdateAsyncMocks(haveStudentMockTimes: 1, validateMockTimes: 1, updateMockTimes: 1, addNotificationMockTimes: 0);
+
             Assert.True(updateResult);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_ProjectDoesNotExist_ReturnsFalse()
+        {
+            // A
+            var projectUpdateRequest = ProjectBuilder.NewObject().UpdateRequestBuild();
+
+            _projectRepositoryMock.Setup(r => r.FindByIdAsync(projectUpdateRequest.Id, UtilTools.MockIIncludableQuery<Project>(), true));
+
+            var addNotificationMockTimes = 1;
+            SetupAddNotificationInRange(addNotificationMockTimes);
+
+            // A
+            var updateResult = await _projectService.UpdateAsync(projectUpdateRequest);
+
+            // A
+            VerifyUpdateAsyncMocks(haveStudentMockTimes: 0, validateMockTimes: 0, updateMockTimes: 0, addNotificationMockTimes);
+
+            Assert.False(updateResult);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_StudentDoesNotExist_ReturnsFalse()
+        {
+            // A
+            var projectUpdateRequest = ProjectBuilder.NewObject().UpdateRequestBuild();
+            var project = ProjectBuilder.NewObject().DomainBuild();
+
+            _projectRepositoryMock.Setup(r => r.FindByIdAsync(projectUpdateRequest.Id, UtilTools.MockIIncludableQuery<Project>(), true)).ReturnsAsync(project);
+            _studentServiceMock.Setup(s => s.HaveStudentInDbAsync(projectUpdateRequest.StudentId)).ReturnsAsync(false);
+
+            var addNotificationMockTimes = 1;
+            SetupAddNotificationInRange(addNotificationMockTimes);
+
+            // A
+            var updateResult = await _projectService.UpdateAsync(projectUpdateRequest);
+
+            // A
+            VerifyUpdateAsyncMocks(haveStudentMockTimes: 1, validateMockTimes: 0, updateMockTimes: 0, addNotificationMockTimes);
+
+            Assert.False(updateResult);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_EntityInvalid_ReturnsFalse()
+        {
+            // A
+            var projectUpdateRequest = ProjectBuilder.NewObject().UpdateRequestBuild();
+            var project = ProjectBuilder.NewObject().DomainBuild();
+
+            _projectRepositoryMock.Setup(r => r.FindByIdAsync(projectUpdateRequest.Id, UtilTools.MockIIncludableQuery<Project>(), true)).ReturnsAsync(project);
+            _studentServiceMock.Setup(s => s.HaveStudentInDbAsync(projectUpdateRequest.StudentId)).ReturnsAsync(true);
+
+            var validationFailureList = new List<ValidationFailure>()
+            {
+                new ValidationFailure()
+                {
+                    ErrorMessage = "rnadom"
+                }
+            };
+
+            var validationResult = new ValidationResult()
+            {
+                Errors = validationFailureList
+            };
+
+            _projectValidatorMock.Setup(pv => pv.ValidateAsync(It.IsAny<Project>(), default)).ReturnsAsync(validationResult);
+
+            var addNotificationMockTimes = validationFailureList.Count;
+            SetupAddNotificationInRange(addNotificationMockTimes);
+
+            // A
+            var updateResult = await _projectService.UpdateAsync(projectUpdateRequest);
+
+            // A
+            VerifyUpdateAsyncMocks(haveStudentMockTimes: 1, validateMockTimes: 1, updateMockTimes: 0, addNotificationMockTimes);
+
+            Assert.False(updateResult);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ReturnsTrue()
+        {
+            // A
+            var id = 1;
+
+            _projectRepositoryMock.Setup(r => r.HaveObjectInDbAsync(p => p.Id == id)).ReturnsAsync(true);
+            _projectRepositoryMock.Setup(r => r.DeleteAsync(id)).ReturnsAsync(true);
+
+            // A
+            var deleteResult = await _projectService.DeleteAsync(id);
+
+            // A
+            VerifyDeleteAsyncMockTimes(deleteMockTimes: 1, addNotificationMockTimes: 0);
+
+            Assert.True(deleteResult);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ProjectDoesNotExist_ReturnsFalse()
+        {
+            // A
+            var id = 1;
+
+            _projectRepositoryMock.Setup(r => r.HaveObjectInDbAsync(p => p.Id == id)).ReturnsAsync(false);
+
+            var addNotificationMockTimes = 1;
+            SetupAddNotificationInRange(addNotificationMockTimes);
+
+            // A
+            var deleteResult = await _projectService.DeleteAsync(id);
+
+            // A
+            VerifyDeleteAsyncMockTimes(deleteMockTimes: 0, addNotificationMockTimes);
+
+            Assert.False(deleteResult);
+        }
+
+        [Fact]
+        public async Task FindProjectByIdAsync_ReturnsEntity()
+        {
+            // A
+            var id = 1;
+            var project = ProjectBuilder.NewObject().DomainBuild();
+
+            _projectRepositoryMock.Setup(r => r.FindByIdAsync(id, null, true)).ReturnsAsync(project);
+
+            // A
+            var findResult = await _projectService.FindProjectByIdAsync(id);
+
+            // A
+            _projectRepositoryMock.Verify(r => r.FindByIdAsync(id, null, true), Times.Once());
+
+            Assert.NotNull(findResult);
+        }
+
+        [Fact]
+        public async Task FindAllProjectsAsync_ReturnsEntities()
+        {
+            // A
+            var projectsList = new List<Project>()
+            {
+                ProjectBuilder.NewObject().DomainBuild(),
+                ProjectBuilder.NewObject().DomainBuild(),
+                ProjectBuilder.NewObject().DomainBuild()
+            };
+
+            _projectRepositoryMock.Setup(r => r.FindAllEntitiesAsync(null)).ReturnsAsync(projectsList);
+
+            // A
+            var findAllResult = await _projectService.FindAllProjectsAsync();
+
+            // A
+            _projectRepositoryMock.Verify(r => r.FindAllEntitiesAsync(null), Times.Once());
+
+            Assert.Equal(findAllResult.Count, projectsList.Count);
         }
 
         private void VerifyAddAsyncMocks(int validateMockTimes, int addMockTimes, int addNotificationMockTimes)
@@ -155,6 +314,13 @@ namespace UnitTests.ServiceTests
             _studentServiceMock.Verify(s => s.HaveStudentInDbAsync(It.IsAny<int>()), Times.Exactly(haveStudentMockTimes));
             _projectValidatorMock.Verify(pv => pv.ValidateAsync(It.IsAny<Project>(), default), Times.Exactly(validateMockTimes));
             _projectRepositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Project>()), Times.Exactly(updateMockTimes));
+            VerifyAddNotificationMock(addNotificationMockTimes);
+        }
+
+        private void VerifyDeleteAsyncMockTimes(int deleteMockTimes, int addNotificationMockTimes)
+        {
+            _projectRepositoryMock.Verify(r => r.HaveObjectInDbAsync(It.IsAny<Expression<Func<Project, bool>>>()), Times.Once());
+            _projectRepositoryMock.Verify(r => r.DeleteAsync(It.IsAny<int>()), Times.Exactly(deleteMockTimes));
             VerifyAddNotificationMock(addNotificationMockTimes);
         }
 
